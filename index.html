@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, sans-serif;
+    }
+
+    body{
+        height:100vh;
+        overflow:hidden;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    }
+
+    .card{
+        background:white;
+        padding:40px;
+        border-radius:25px;
+        text-align:center;
+        width:420px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1{
+        color:#ff4f81;
+        margin-bottom:50px;
+        font-size:34px;
+    }
+
+    .buttons{
+        position:relative;
+        height:180px;
+    }
+
+    button{
+        border:none;
+        padding:15px 35px;
+        border-radius:12px;
+        font-size:22px;
+        cursor:pointer;
+        color:white;
+        transition:0.15s;
+    }
+
+    #yesBtn{
+        background:#28c76f;
+        position:absolute;
+        left:220px;
+        top:60px;
+    }
+
+    #noBtn{
+        background:#ff4d4d;
+        position:fixed;
+        left:100px;
+        top:100px;
+        z-index:999;
+    }
+
+    #message{
+        margin-top:25px;
+        font-size:30px;
+        color:#ff4f81;
+        font-weight:bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Я тобі подобаюся? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Так ❤️</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<button id="noBtn">Ні 😅</button>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+
+    function moveButton() {
+        const maxX = window.innerWidth - noBtn.offsetWidth;
+        const maxY = window.innerHeight - noBtn.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+    }
+
+    // Тікає ще ДО наведення
+    document.addEventListener("mousemove", (e) => {
+        const rect = noBtn.getBoundingClientRect();
+
+        const distanceX = Math.abs(e.clientX - (rect.left + rect.width / 2));
+        const distanceY = Math.abs(e.clientY - (rect.top + rect.height / 2));
+
+        if(distanceX < 120 && distanceY < 80){
+            moveButton();
+        }
+    });
+
+    // Захист від кліку
+    noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        moveButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+        message.innerHTML = "Я знав 😎❤️";
+    });
+</script>
+
+</body>
+</html>
